@@ -4,13 +4,13 @@ services:
     build: ./app
     command: gunicorn --workers=4 app:app --bind 127.0.0.1:5000
     volumes:
-      - ./app/:/usr/src/app/
+      - ./app/:/app/
     ports:
       - 5000:5000
   vue-ui:
     build: ./client
     command: npm run dev
     volumes:
-      - ./app/:/usr/src/app/
+      - ./app/:/app/
     ports:
       - "8081:8081"
