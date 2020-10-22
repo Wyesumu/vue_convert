@@ -1,11 +1,22 @@
-FROM node:10
-WORKDIR /usr/src/app/ui
-COPY ./package*.json ./
-RUN npm install
+FROM node:lts-alpine
+
+# устанавливаем простой HTTP-сервер для статики
 RUN npm install -g http-server
-RUN npm install --save-dev webpack
-RUN npm install --save-dev webpack-dev-server 
-RUN npm install --save-dev webpack-cli
+
+# делаем каталог 'app' текущим рабочим каталогом
+WORKDIR /app
+
+# копируем оба 'package.json' и 'package-lock.json' (если есть)
+COPY package*.json ./
+
+# устанавливаем зависимости проекта
+RUN npm install
+
+# копируем файлы и каталоги проекта в текущий рабочий каталог (т.е. в каталог 'app')
 COPY . .
-EXPOSE 8081
-CMD ["npm", "test:dev"]
+
+# собираем приложение для production с минификацией
+RUN npm run build
+
+EXPOSE 8080
+CMD [ "http-server", "dist" ]
