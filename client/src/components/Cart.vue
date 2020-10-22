@@ -16,12 +16,20 @@
             <div class='col'>{{ good.quantity }}</div>
             <div class='col'>{{ good.currency }}</div>
             <div class='col'>{{ good.price }}</div>
-            <div class='col'><button type="button" @click="onDeleteGood(good)" class="btn btn-danger btn">Delete</button></div>
+            <div class='col'>
+              <button type="button" @click="onDeleteGood(good)" class="btn btn-danger btn">
+                Delete
+              </button>
+            </div>
         </div>
         <form @submit="onSubmit">
             <div class='row my-2'>
-                <div class='col'><input placeholder="Name" class='form-control' v-model='addGoodForm.name'></div>
-                <div class='col'><input type='number' min=1 placeholder="Quantity" class='form-control' v-model='addGoodForm.quantity'></div>
+                <div class='col'>
+                  <input placeholder="Name" class='form-control' v-model='addGoodForm.name'>
+                </div>
+                <div class='col'>
+                  <input type='number' min=1 placeholder="Quantity" class='form-control' v-model='addGoodForm.quantity'>
+                </div>
                 <div class='col'>
                     <select class="custom-select" v-model='addGoodForm.currency'>
                       <option value="RUB">RUB</option>
@@ -29,7 +37,9 @@
                       <option value="EUR">EUR</option>
                     </select>
                 </div>
-                <div class='col'><input type='number' step=0.1 min=1 placeholder="Price" class='form-control' v-model='addGoodForm.price'></div>
+                <div class='col'>
+                  <input type='number' step=0.1 min=1 placeholder="Price" class='form-control' v-model='addGoodForm.price'>
+                </div>
 
                 <button type="submit" class="btn btn-success btn ml-auto">Add good</button>
             </div>
@@ -39,7 +49,9 @@
                 <p>{{ result_calculate }}</p>
             </div>
             <div class='col'>
-                <button type="submit" @click="onCaculate()" class="btn btn-info btn ml-auto">Calculate</button>
+                <button type="submit" @click="onCaculate()" class="btn btn-info btn ml-auto">
+                  Calculate
+                </button>
             </div>
         </div>
       </div>
@@ -121,20 +133,18 @@ export default {
       const path = 'http://127.0.0.1:5000/user/cart/calculate';
       axios.post(path, payload)
         .then((result) => {
-            console.log(result);
-            this.result_calculate = result['data']['message'];
-          //this.getGoods();
+          console.log(result);
+          this.result_calculate = result.data.message;
         })
         .catch((error) => {
           console.log(error);
-          //this.getGoods();
         });
     },
     onCaculate() {
-        const payload = {
-            goods: this.goods,
-        }
-        this.calculateCurrency(payload);
+      const payload = {
+        goods: this.goods,
+      };
+      this.calculateCurrency(payload);
     },
   },
   created() {

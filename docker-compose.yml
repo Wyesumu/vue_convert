@@ -2,15 +2,15 @@ version: '3'
 services:
   web:
     build: ./app
-    command: gunicorn --workers=4 app:app --bind 127.0.0.1:5000
+    command: gunicorn --workers=4 app:app --bind 0.0.0.0:5000
     volumes:
-      - ./app/:/app/
+      - ./app/:/usr/src/app/
     ports:
       - 5000:5000
   vue-ui:
     build: ./client
     command: npm run dev
     volumes:
-      - ./app/:/app/
+      - ./app/:/usr/src/app/
     ports:
       - "8081:8081"
